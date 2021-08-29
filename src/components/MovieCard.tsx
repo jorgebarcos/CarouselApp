@@ -15,6 +15,11 @@ interface Props {
   index: number;
 }
 
+type Styles = {
+  activeIndex: number;
+  index: number;
+};
+
 const MovieCard = ({movie, scrollToActiveIndex, activeIndex, index}: Props) => {
   const uri = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
@@ -46,10 +51,7 @@ const MovieCard = ({movie, scrollToActiveIndex, activeIndex, index}: Props) => {
           source={{
             uri,
           }}
-          style={[
-            styles.cardImage,
-            {borderColor: activeIndex === index ? '#fff' : 'transparent'},
-          ]}
+          style={styles({activeIndex, index}).cardImage}
           resizeMethod="auto"
         />
       </TouchableOpacity>
@@ -59,12 +61,14 @@ const MovieCard = ({movie, scrollToActiveIndex, activeIndex, index}: Props) => {
 
 export default MovieCard;
 
-const styles = StyleSheet.create({
-  cardImage: {
-    width: IMAGE_SIZE,
-    height: IMAGE_SIZE,
-    borderRadius: 12,
-    marginRight: SPACING,
-    borderWidth: 2,
-  },
-});
+const styles = ({activeIndex, index}: Styles) =>
+  StyleSheet.create({
+    cardImage: {
+      width: IMAGE_SIZE,
+      height: IMAGE_SIZE,
+      borderRadius: 12,
+      marginRight: SPACING,
+      borderWidth: 2,
+      borderColor: activeIndex === index ? '#fff' : 'transparent',
+    },
+  });

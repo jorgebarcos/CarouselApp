@@ -19,6 +19,11 @@ interface Props {
   setActiveIndex: (index: number) => void;
 }
 
+type Styles = {
+  activeIndex?: number;
+  moviesState: Movie[];
+};
+
 const ButtonsNavigation = ({
   moviesState,
   thumbRef,
@@ -26,10 +31,10 @@ const ButtonsNavigation = ({
   setActiveIndex,
 }: Props) => {
   return (
-    <View style={styles.container}>
+    <View style={styles({activeIndex, moviesState}).container}>
       <TouchableOpacity
         disabled={activeIndex === 0}
-        style={{opacity: activeIndex === 0 ? 0.2 : 1}}
+        style={styles({activeIndex, moviesState}).btnLeft}
         onPress={() => {
           thumbRef?.current?.scrollToOffset({
             offset: (activeIndex - 1) * width,
@@ -37,14 +42,14 @@ const ButtonsNavigation = ({
           });
           setActiveIndex(activeIndex - 1);
         }}>
-        <View style={styles.btnContainer}>
-          <Text style={styles.btnText}>PREV</Text>
+        <View style={styles({activeIndex, moviesState}).btnContainer}>
+          <Text style={styles({activeIndex, moviesState}).btnText}>PREV</Text>
           <Icon name="swapleft" size={42} color="white" />
         </View>
       </TouchableOpacity>
       <TouchableOpacity
         disabled={activeIndex === moviesState?.length - 1}
-        style={{opacity: activeIndex === moviesState?.length - 1 ? 0.2 : 1}}
+        style={{}}
         onPress={() => {
           thumbRef?.current?.scrollToOffset({
             offset: (activeIndex + 1) * width,
@@ -52,8 +57,8 @@ const ButtonsNavigation = ({
           });
           setActiveIndex(activeIndex + 1);
         }}>
-        <View style={styles.btnContainer}>
-          <Text style={styles.btnText}>NEXT</Text>
+        <View style={styles({activeIndex, moviesState}).btnContainer}>
+          <Text style={styles({activeIndex, moviesState}).btnText}>NEXT</Text>
           <Icon name="swapright" size={42} color="white" />
         </View>
       </TouchableOpacity>
@@ -63,15 +68,18 @@ const ButtonsNavigation = ({
 
 export default ButtonsNavigation;
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: 10,
-  },
-  btnContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  btnText: {fontSize: 12, fontWeight: '500', color: 'white'},
-});
+const styles = ({activeIndex, moviesState}: Styles) =>
+  StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginHorizontal: 10,
+    },
+    btnContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    btnLeft: {opacity: activeIndex === 0 ? 0.2 : 1},
+    btnRight: {opacity: activeIndex === moviesState?.length - 1 ? 0.2 : 1},
+    btnText: {fontSize: 12, fontWeight: '500', color: 'white'},
+  });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, FlatList} from 'react-native';
+import {Text, View, FlatList, StyleSheet} from 'react-native';
 import {Movie} from '../interfaces/movieInterface';
 import MovieCard from './MovieCard';
 
@@ -36,8 +36,8 @@ const HorizontalCarousel = ({
               activeIndex={activeIndex}
               index={index}
             />
-            <View style={{width: IMAGE_SIZE, height: 40, marginHorizontal: 5}}>
-              <Text style={{color: 'white', marginTop: 5}}>{item.title}</Text>
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>{item.title}</Text>
             </View>
           </View>
         );
@@ -47,3 +47,15 @@ const HorizontalCarousel = ({
 };
 
 export default HorizontalCarousel;
+
+const styles = StyleSheet.create({
+  titleContainer: {
+    width: IMAGE_SIZE,
+    height: 40,
+    marginHorizontal: 5,
+  },
+  title: {
+    color: 'white',
+    marginTop: 5,
+  },
+});
