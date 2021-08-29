@@ -25,6 +25,7 @@ const MovieCard = ({movie, scrollToActiveIndex, activeIndex, index}: Props) => {
 
   useEffect(() => {
     getDataStorage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getDataStorage = async () => {
